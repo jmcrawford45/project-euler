@@ -7,8 +7,7 @@ def is_prime(n: int) -> bool:
     return True
 
 def prime_permutations(n: int) -> bool:
-    if all(is_prime(i*3330 + n) and Counter(str(i*3330 + n)) == Counter(str(n)) for i in range(3)):
-        return True
+    return all(is_prime(i*3330 + n) and Counter(str(i*3330 + n)) == Counter(str(n)) for i in range(3))
 
 seen = set()
 for n in range(1000, 10_000):

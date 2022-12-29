@@ -21,7 +21,7 @@ def prime_factors(n: int) -> set[int]:
                 if is_prime(i):
                     out.add(i)
                 break
-    return out if out else set(n)
+    return out if out else set([n])
 curr = 14
 while True:
     if all(len(prime_factors(i)) == 4 for i in range(curr, curr+4)):
