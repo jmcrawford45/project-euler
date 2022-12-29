@@ -1,0 +1,46 @@
+raw = """
+75
+95 64
+17 47 82
+18 35 87 10
+20 04 82 47 65
+19 01 23 75 03 34
+88 02 77 73 07 63 67
+99 65 04 28 06 16 70 92
+41 41 26 56 83 40 80 70 33
+41 48 72 33 47 32 37 16 94 29
+53 71 44 65 25 43 91 52 97 51 14
+70 11 33 28 77 73 17 78 39 68 17 57
+91 71 52 38 17 14 91 43 58 50 27 29 48
+63 66 04 68 89 53 67 30 73 16 69 87 40 31
+04 62 98 27 23 09 70 98 73 93 38 53 60 04 23"""
+class Node:
+    def __init__(self, val, row, col):
+        self.val = val
+        self.row = row
+        self.col = col
+        self.children = []
+    def __hash__(self) -> int:
+        return hash((self.val, self.row, self.col))
+        
+
+pyramid = []
+for line in raw.strip().splitlines():
+    line = line.strip()
+    row = [Node(int(c), len(pyramid), i) for i, c in enumerate(line.split())]
+    pyramid.append(row)
+for row, nodes in enumerate(pyramid[:-1]):
+    for col, node in enumerate(nodes):
+        node.children = [pyramid[row+1][col], pyramid[row+1][col+1]]
+assert not any(n.children for n in pyramid[-1])
+assert pyramid[3][1].val == 35
+assert pyramid[3][1].children[0].val == 4
+assert pyramid[3][1].children[1].val == 82
+
+from functools import lru_cache
+@lru_cache(maxsize=None)
+def max_path(node: Node) -> int:
+    if not node.children:
+        return node.val
+    return max(node.val + max_path(child) for child in node.children)
+print(max_path(pyramid[0][0]))
