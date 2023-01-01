@@ -20,6 +20,6 @@ def primes_in_range(low: int, high: int) -> list[int]:
         else:
             for multiple in range(i, high, i):
                 sieve[multiple] = 0
-            if i > low:
+            if i >= low:
                 out.append(i)
     return out
