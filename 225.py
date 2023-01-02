@@ -1,0 +1,1 @@
+# if n divides a term, we must have 3 consecutive
