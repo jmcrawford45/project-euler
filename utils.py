@@ -23,3 +23,19 @@ def primes_in_range(low: int, high: int) -> list[int]:
             if i >= low:
                 out.append(i)
     return out
+
+def gcd(x,y):
+    while x!=y:
+        if x > y:
+            x -= y
+        else:
+            y -= x
+    return x
+
+def num_divisors(n: int) -> int:
+    divisors = set()
+    for i in range(1, ceil(sqrt(n)) + 1):
+        if n % i == 0:
+            divisors.add(i)
+            divisors.add(n / i)
+    return len(divisors)
