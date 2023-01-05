@@ -39,3 +39,4 @@ def num_divisors(n: int) -> int:
             divisors.add(i)
             divisors.add(n / i)
     return len(divisors)
+    
