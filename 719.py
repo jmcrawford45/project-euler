@@ -13,7 +13,7 @@ def s_number(n: int, target: int) -> bool:
             return True
     return False
 res = 0
-for i in range(4, 10**2+1):
+for i in range(4, 10**6+1):
     if i % 10**4 == 0:
         print('1k')
     if s_number(i**2, i):
