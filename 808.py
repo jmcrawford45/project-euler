@@ -15,17 +15,22 @@ def is_palindrome(n: int) -> bool:
 reversible_prime_squares: set[int] = set()
 curr = 3
 prime_squares = set()
-while len(reversible_prime_squares) < 50:
-    while str(curr**2)[:-1] not in set('159') and str(curr**2)[:1] not in set('159') and not is_prime(curr):
-        curr += 2
+target_digits = 0
+seen = set()
+res = 0
+while len(seen) < 50:
     prime_squares.add(curr ** 2)
     candidate = int(''.join(reversed(str(curr**2))))
     if (not is_palindrome(curr ** 2)) and candidate in prime_squares:
         print(curr**2, candidate)
+        if curr ** 2 not in seen:
+            seen.add(curr**2)
+            seen.add(candidate)
+            res += curr**2 + candidate
         reversible_prime_squares.add(curr ** 2)
-        if candidate < curr ** 2:
-            reversible_prime_squares.add(candidate)
+        reversible_prime_squares.add(candidate)
     curr += 2
+print(res)
     
 
-print(sum(sorted(reversible_prime_squares)))
+print(sum(list(sorted(reversible_prime_squares))[:50]))

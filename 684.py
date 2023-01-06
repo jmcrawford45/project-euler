@@ -18,11 +18,8 @@ def s(n, optimize=True):
         return (non_cycle_offset) % modulus
     return int(str(remainder) + ('9' * num_nines)) % modulus
 
-@lru_cache
 def S(n):
-    if n == 0:
-        return 0
-    return s(n) + S(n-1)
+    return sum(s(i) for i in range(1, n+1))
 assert s(10) == 19
 assert S(20) == 1074
 assert s(81) == (-8 % modulus)
