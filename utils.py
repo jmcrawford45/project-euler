@@ -33,10 +33,13 @@ def gcd(x,y):
     return x
 
 def num_divisors(n: int) -> int:
+    return len(num_divisors(n))
+
+def divisors(n: int) -> set[int]:
     divisors = set()
     for i in range(1, ceil(sqrt(n)) + 1):
         if n % i == 0:
             divisors.add(i)
             divisors.add(n / i)
-    return len(divisors)
+    return divisors
     
