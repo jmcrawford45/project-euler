@@ -43,3 +43,5 @@ def divisors(n: int) -> set[int]:
             divisors.add(n / i)
     return divisors
     
+def is_palindrome(n: int) -> bool:
+    return int(''.join(reversed(str(n)))) == n
