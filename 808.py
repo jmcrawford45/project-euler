@@ -1,4 +1,9 @@
 from math import *
+from utils import *
+primes = primes_in_range(2, 50_000_000)
+primes_squares = set([p**2 for p in primes])
+
+@lru_cache(maxsize=None)
 def is_prime(n: int) -> bool:
     if n < 2:
         return False
@@ -13,12 +18,11 @@ def is_palindrome(n: int) -> bool:
     return int(''.join(reversed(str(n)))) == n
 
 reversible_prime_squares: set[int] = set()
-curr = 3
 prime_squares = set()
 target_digits = 0
 seen = set()
 res = 0
-while len(seen) < 50:
+for curr in primes:
     prime_squares.add(curr ** 2)
     candidate = int(''.join(reversed(str(curr**2))))
     if (not is_palindrome(curr ** 2)) and candidate in prime_squares:
@@ -29,7 +33,6 @@ while len(seen) < 50:
             res += curr**2 + candidate
         reversible_prime_squares.add(curr ** 2)
         reversible_prime_squares.add(candidate)
-    curr += 2
 print(res)
     
 
