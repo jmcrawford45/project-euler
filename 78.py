@@ -10,7 +10,7 @@ curr = 0
 closest = float('inf')
 from fractions import Fraction
 for i in range(100):
-    print(i, Fraction(count_sums(i, i), count_sums(i-1, i-1)))
+    print(i, count_sums(i, i))
 # while count_sums(curr, curr) % 1_000_000 != 0:
 #     if count_sums(curr, curr) % 1_000_000 < closest and count_sums(curr, curr) > 1_000_000:
 #         closest = count_sums(curr, curr) % 1_000_000

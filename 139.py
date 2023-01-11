@@ -12,6 +12,11 @@ for m in range(1, floor(sqrt(target))+1):
         triangle = triple(n, m)
         if sum(triangle) > target:
             break
-        if 2*triangle[0]*triangle[1]+1 == max(triangle)**2:
-            res += 1
+        curr = 1
+        original = triangle
+        while sum(triangle) < target:
+            triangle = tuple(t*curr for t in original)
+            if max(triangle) % abs(triangle[0]-triangle[1]) == 0:
+                res += 1
+            curr += 1
 print(res)
