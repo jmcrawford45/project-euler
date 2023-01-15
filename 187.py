@@ -1,18 +1,15 @@
-from utils import *
-from itertools import product
-def prime_products_below(high) -> int:
-    primes = primes_in_range(2,high)
-    print(len(primes))
-    count = 0
-    for i, p1 in enumerate(primes):
-        if high > 10**4 and (i % high//100) == 0:
-            print(f"{i // high//100}%")
-        for p2 in primes[i:]:
-            if p1 * p2 < high:
-                count += 1
-            else:
-                continue
-    return count
-    # return len(set(i*j for i,j in product(primes, primes) if i*j < high))
+def prime_products_below(high: int) -> int:
+    sieve = [0] * (high + 1)
+    out = set()
+    for num, i in enumerate(sieve):
+        if num < 2 or i > 0:
+            continue
+        else:
+            sieve[num] = 1
+            for multiple in range(num, high, num):
+                sieve[multiple] = sieve[multiple//num] + 1
+                if sieve[multiple] == 2:
+                    out.add(multiple)
+    return len([i for i, num in enumerate(sieve) if num == 2])
 assert prime_products_below(30) == 10
 print(prime_products_below(10**8))
