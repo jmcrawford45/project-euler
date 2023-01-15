@@ -50,5 +50,6 @@ def load_input(raw: str) -> list[Constraint]:
 def guess(constraints: list[Constraint], digits: int) -> str | None:
     
     
+    
 
 guess(load_input(test), 5)

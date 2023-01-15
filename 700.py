@@ -1,15 +1,17 @@
-accumulator = 3451657199285664
+accumulator = 1504170715041707
 modulus = 4503599627370517
-curr = 3451657199285664
-coins = set([0])
+curr = 1504170715041707
+coins = set([1504170715041707])
+i = 1
 while True:
-    if curr > max(coins):
-        print(curr)
+    curr += accumulator
+    curr %= modulus
+    i += 1
+    if curr < min(coins):
+        print(curr, i)
         print(f"sum {sum(coins)}")
         coins.add(curr)
     elif curr in coins:
         break
-    curr += accumulator
-    curr %= modulus
 
 print(sum(coins))

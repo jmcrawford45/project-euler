@@ -6,7 +6,7 @@ def triple(n, m):
 target = 100_000_000
 from collections import defaultdict
 triangles = defaultdict(set)
-res = 0
+res = set()
 for m in range(1, floor(sqrt(target))+1):
     for n in range(1, m):
         triangle = triple(n, m)
@@ -14,9 +14,10 @@ for m in range(1, floor(sqrt(target))+1):
             break
         curr = 1
         original = triangle
+        
         while sum(triangle) < target:
             triangle = tuple(t*curr for t in original)
             if max(triangle) % abs(triangle[0]-triangle[1]) == 0:
-                res += 1
+                res.add(triangle)
             curr += 1
-print(res)
+print(len(res))
