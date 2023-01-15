@@ -45,3 +45,17 @@ def divisors(n: int) -> set[int]:
     
 def is_palindrome(n: int) -> bool:
     return int(''.join(reversed(str(n)))) == n
+
+def prime_factors(n: int) -> set[int]:
+    out = set()
+    while n != 1:
+        if is_prime(n):
+            out.add(n)
+            break
+        for i in range(2, ceil(sqrt(n)) + 1):
+            if n % i == 0:
+                n = n//i
+                if is_prime(i):
+                    out.add(i)
+                break
+    return out if out else set([n])
