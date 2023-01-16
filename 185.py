@@ -32,24 +32,64 @@ problem = """
 2659862637316867 ;2 correct
 """
 from dataclasses import dataclass
+from functools import lru_cache
 
 @dataclass
 class Constraint:
     guess: str
     num_correct: int
 
-def load_input(raw: str) -> list[Constraint]:
+    @lru_cache(maxsize=None)
+    def is_violated(self, guess: str) -> bool:
+        num_correct = len([c1 for c1, c2 in zip(guess, self.guess) if c1 == c2])
+        if num_correct > self.num_correct or (self.num_correct - num_correct > len(self.guess) - len(guess)):
+            return True
+        return False
+    
+    def __hash__(self) -> int:
+        return hash((self.guess, self.num_correct))
+
+
+def load_input(raw: str) -> tuple[Constraint]:
     res = []
     for line in raw.strip().splitlines():
         guess, rest = line.split(' ;')
         num_correct = int(rest.split()[0])
         res.append(Constraint(guess, num_correct))
     res.sort(key=lambda c: c.num_correct)
-    return res
+    return tuple(res)
 
-def guess(constraints: list[Constraint], digits: int) -> str | None:
-    
-    
-    
+@lru_cache(maxsize=None)
+def could_be_valid(constraints: tuple[Constraint], guess: str) -> bool:
+    for constraint in constraints:
+        if constraint.is_violated(guess):
+            return False
+    return True
 
-guess(load_input(test), 5)
+from collections import deque
+def guess(constraints: tuple[Constraint], digits: int) -> str | None:
+    queue = deque()
+    queue.append("")
+    max_seen = 0
+    invalid = set()
+    while queue:
+        curr = queue.popleft()
+        if curr in invalid or curr[:-1] in invalid or curr[:-1] in invalid:
+            continue
+        if len(curr) > max_seen:
+            max_seen = len(curr)
+            print(len(curr))
+        print(curr)
+        max_seen = max(max_seen, len(curr))
+        if len(curr) == digits and could_be_valid(constraints, curr):
+            return curr
+        if could_be_valid(constraints, curr):
+            for guess in range(0, 10):
+                queue.append(curr + str(guess))
+        else:
+            invalid.add(curr)
+    
+    
+    
+assert guess(load_input(test), 5) == "39542"
+print(guess(load_input(problem), 16))

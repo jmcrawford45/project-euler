@@ -19,16 +19,14 @@ component_graph = defaultdict(set)
 calls = 0
 prime_minister = 524287
 for caller, called in records():
-    if calls % 10000 == 0:
+    if caller == called:
+        continue
+    if calls % 50000 == 0:
         print(calls)
-    if prime_minister in (caller, called):
-        print('important')
-
-    if len(component_graph[prime_minister]) >= 990000:
-        break
     bigger = component_graph[called]
     smaller = component_graph[caller]
     if caller in bigger and called in smaller:
+        calls += 1
         continue
     if len(component_graph[caller]) > len(component_graph[called]):
         bigger = component_graph[caller]
@@ -37,7 +35,7 @@ for caller, called in records():
     bigger |= smaller
     for person in smaller:
         component_graph[person] = bigger
-    if caller == called:
-        continue
     calls += 1
+    if len(component_graph[prime_minister]) >= 990000:
+        break
 print(calls)

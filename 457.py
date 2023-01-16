@@ -1,0 +1,1 @@
+"""quadratic resolves to 13+4kp^2 is a perfect square"""
